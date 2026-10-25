@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BrightSmile Dental | Ask us anything</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3f7f6;
+    --ink: #14292b;
+    --muted: #5b7172;
+    --teal: #0e6b6b;
+    --teal-dark: #0a5252;
+    --mist: #dcecea;
+    --line: #cfe0de;
+    --white: #ffffff;
+    --amber: #f2b84b;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    display: grid;
+    grid-template-columns: minmax(260px, 380px) 1fr;
+  }
+  .side {
+    background: var(--teal);
+    color: #eaf5f4;
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .side h1 {
+    font-family: "Bricolage Grotesque", Georgia, serif;
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0;
+    color: var(--white);
+  }
+  .side p { margin: 0; color: #cfe6e4; }
+  .facts { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+  .facts li { border-top: 1px solid rgba(255,255,255,.22); padding-top: 12px; }
+  .facts b { display: block; color: var(--white); font-weight: 500; }
+  .facts span { color: #cfe6e4; font-size: .95rem; }
+
+  .chat-wrap { display: flex; justify-content: center; padding: 32px 24px; min-height: 0; }
+  .chat {
+    width: 100%;
+    max-width: 680px;
+    height: calc(100vh - 64px);
+    max-height: 820px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .chat-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #2fb67c; flex: none; }
+  .chat-head strong { font-family: "Bricolage Grotesque", Georgia, serif; font-size: 1.05rem; }
+  .chat-head small { color: var(--muted); display: block; line-height: 1.2; }
+
+  #log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .msg {
+    max-width: 82%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .msg.bot { background: var(--mist); border-bottom-left-radius: 4px; align-self: flex-start; }
+  .msg.user { background: var(--teal); color: var(--white); border-bottom-right-radius: 4px; align-self: flex-end; }
+  .msg.error { background: #fdeceb; color: #8a1f17; align-self: flex-start; }
+
+  .typing { display: inline-flex; gap: 4px; padding: 14px; }
+  .typing i {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--muted);
+    animation: blink 1.1s infinite;
+  }
+  .typing i:nth-child(2) { animation-delay: .18s; }
+  .typing i:nth-child(3) { animation-delay: .36s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+
+  .chips { padding: 0 20px 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button {
+    font: inherit; font-size: .9rem; cursor: pointer;
+    background: var(--white); color: var(--teal-dark);
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
+  }
+  .chips button:hover { background: var(--mist); }
+
+  form { display: flex; gap: 10px; padding: 14px 20px 18px; border-top: 1px solid var(--line); }
+  input {
+    flex: 1; font: inherit; padding: 11px 14px;
+    border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink);
+  }
+  .send {
+    font: inherit; font-weight: 500; cursor: pointer;
+    background: var(--teal); color: var(--white);
+    border: 0; border-radius: 10px; padding: 0 20px;
+  }
+  .send:hover { background: var(--teal-dark); }
+  .send:disabled { opacity: .5; cursor: not-allowed; }
+  button:focus-visible, input:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+  @media (max-width: 860px) {
+    body { grid-template-columns: 1fr; height: auto; }
+    .side { padding: 28px 24px; }
+    .facts { grid-template-columns: 1fr 1fr; }
+    .chat-wrap { padding: 16px; }
+    .chat { height: 80vh; }
+  }
+  @media (prefers-reduced-motion: reduce) { .typing i { animation: none; opacity: .6; } }
+</style>
+</head>
+<body>
+  <aside class="side">
+    <h1>BrightSmile Dental</h1>
+    <p>Demo clinic site. The assistant on the right answers patient questions around the clock.</p>
+    <ul class="facts">
+      <li><b>Mon to Fri</b><span>9:00 AM to 6:00 PM</span></li>
+      <li><b>Saturday</b><span>10:00 AM to 2:00 PM</span></li>
+      <li><b>Emergency line</b><span>(555) 010-9111</span></li>
+      <li><b>Visit us</b><span>42 Park Avenue, Suite 3</span></li>
+    </ul>
+  </aside>
+
+  <main class="chat-wrap">
+    <section class="chat" aria-label="Customer support chat">
+      <div class="chat-head">
+        <span class="dot" aria-hidden="true"></span>
+        <div><strong>BrightSmile Assistant</strong><small id="modeLabel">Usually replies in seconds</small></div>
+      </div>
+      <div id="log" role="log" aria-live="polite"></div>
+      <div class="chips" id="chips">
+        <button type="button">How much is teeth whitening?</button>
+        <button type="button">Are you open on Saturday?</button>
+        <button type="button">Do you accept insurance?</button>
+        <button type="button">I have a toothache, what do I do?</button>
+      </div>
+      <form id="form" autocomplete="off">
+        <input id="input" type="text" maxlength="500" placeholder="Type your question" aria-label="Your question" required>
+        <button class="send" id="send" type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+<script>
+  const log = document.getElementById("log");
+  const form = document.getElementById("form");
+  const input = document.getElementById("input");
+  const send = document.getElementById("send");
+  const chips = document.getElementById("chips");
+  const history = [];
+  const modeLabel = document.getElementById("modeLabel");
+
+  function addMessage(text, kind) {
+    const el = document.createElement("div");
+    el.className = "msg " + kind;
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+  function showTyping() {
+    const el = document.createElement("div");
+    el.className = "msg bot typing";
+    el.innerHTML = "<i></i><i></i><i></i>";
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+  async function ask(text) {
+    text = text.trim();
+    if (!text) return;
+    chips.style.display = "none";
+    addMessage(text, "user");
+    history.push({ role: "user", content: text });
+    input.value = "";
+    send.disabled = true;
+    const typing = showTyping();
+
+    try {
+      const res = await fetch("/.netlify/functions/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history }),
+      });
+      const data = await res.json();
+      typing.remove();
+      if (!res.ok) throw new Error(data.error || "Request failed");
+      if (data.mode === "demo") modeLabel.textContent = "Demo mode: rule-based answers, not AI";
+      history.push({ role: "assistant", content: data.reply });
+      addMessage(data.reply, "bot");
+    } catch (err) {
+      typing.remove();
+      history.pop();
+      addMessage(err.message + " Please try again.", "error");
+    } finally {
+      send.disabled = false;
+      input.focus();
+    }
+  }
+
+  form.addEventListener("submit", (e) => { e.preventDefault(); ask(input.value); });
+  chips.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => ask(b.textContent)));
+
+  addMessage("Hi, I am the BrightSmile assistant. Ask me about prices, opening hours, insurance or booking.", "bot");
+</script>
+</body>
+</html>
